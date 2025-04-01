@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Cart } from './cart/entities/cart.entity';
 import { CartItem } from './cart/entities/cart-item.entity';
 import { Order } from './order/entities/order.entity';
+import { User } from './users/entities/user.entity';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { Order } from './order/entities/order.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [Cart, CartItem, Order],
+        entities: [Cart, CartItem, Order, User],
         synchronize: true,
       }),
     }),
