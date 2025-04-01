@@ -4,7 +4,7 @@ import { CartStatuses } from '../models';
 import { PutCartPayload } from 'src/order/type';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cart } from '../entities/cart.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { CartItem } from '../entities/cart-item.entity';
 
 @Injectable()
@@ -16,11 +16,15 @@ export class CartService {
     private cartItemRepository: Repository<CartItem>,
   ) {}
 
-  async findByUserId(userId: string) {
-    return this.cartRepository.findOne({ where: { user_id: userId } });
+  async findByUserId(userId: string, manager?: EntityManager) {
+    const repository = manager
+      ? manager.getRepository(Cart)
+      : this.cartRepository;
+
+    return await repository.findOne({ where: { user_id: userId } });
   }
 
-  createByUserId(user_id: string): Cart {
+  createByUserId(user_id: string) {
     const timestamp = Date.now();
 
     const userCart = this.cartRepository.create({
@@ -74,10 +78,14 @@ export class CartService {
       await this.cartItemRepository.save(userCart.items[index]);
     }
 
-    return this.cartRepository.save(userCart);
+    return await this.cartRepository.save(userCart);
   }
 
-  removeByUserId(userId: string): void {
-    this.cartRepository.delete({ user_id: userId });
+  async removeByUserId(userId: string, manager?: EntityManager) {
+    const repository = manager
+      ? manager.getRepository(Cart)
+      : this.cartRepository;
+
+    await repository.delete({ user_id: userId });
   }
 }

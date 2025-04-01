@@ -13,6 +13,13 @@ type StatusHistory = Array<{
   comment: string;
 }>;
 
+export type Payment = {
+  type: string;
+  amount: number;
+  currency: string;
+  details?: Record<string, any>;
+};
+
 export type Address = {
   address: string;
   firstName: string;
@@ -36,7 +43,9 @@ export type PutCartPayload = {
 export type CreateOrderPayload = {
   userId: string;
   cartId: string;
-  items: Array<{ productId: string; count: number }>;
+  items: Array<{ product_id: string; count: number }>;
   address: Address;
+  payment: Payment;
+  comments: string;
   total: number;
 };
