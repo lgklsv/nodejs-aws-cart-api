@@ -7,7 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { OrderModule } from './order/order.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Cart } from './cart/entities/cart.entities';
+import { Cart } from './cart/entities/cart.entity';
+import { CartItem } from './cart/entities/cart-item.entity';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { Cart } from './cart/entities/cart.entities';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [Cart],
+        entities: [Cart, CartItem],
         synchronize: true,
       }),
     }),
