@@ -15,12 +15,21 @@ export class UsersService {
     return await this.userRepository.findOne({ where: { name } });
   }
 
-  createOne({ name, password }: { name: string; password: string }) {
+  createOne({
+    name,
+    email,
+    password,
+  }: {
+    name: string;
+    email?: string;
+    password: string;
+  }) {
     const id = randomUUID();
 
     const user = this.userRepository.create({
       id,
       name,
+      email,
       password,
     });
 

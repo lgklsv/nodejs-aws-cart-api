@@ -35,6 +35,15 @@ export class NestLambdaStack extends cdk.Stack {
             'rxjs',
           ],
         },
+        environment: {
+          DB_HOST: process.env.DB_HOST,
+          DB_PORT: process.env.DB_PORT,
+          DB_USERNAME: process.env.DB_USERNAME,
+          DB_PASSWORD: process.env.DB_PASSWORD,
+          DB_NAME: process.env.DB_NAME,
+          AUTH_USERNAME: process.env.AUTH_USERNAME,
+          AUTH_PASSWORD: process.env.AUTH_PASSWORD,
+        },
       },
     );
 

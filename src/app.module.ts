@@ -30,6 +30,9 @@ import { User } from './users/entities/user.entity';
         database: configService.get('DB_NAME'),
         entities: [Cart, CartItem, Order, User],
         synchronize: true,
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
     }),
   ],

@@ -23,7 +23,7 @@ export class Order {
   @Column({ type: 'jsonb' })
   delivery: Address;
 
-  @Column({ type: 'string' })
+  @Column({ type: 'varchar', length: 255 })
   comments: string;
 
   @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.Open })

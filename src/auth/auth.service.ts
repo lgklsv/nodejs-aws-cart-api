@@ -15,7 +15,11 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(payload: { name: string; password: string }) {
+  async register(payload: {
+    name: string;
+    email?: string | null;
+    password: string;
+  }) {
     const user = await this.usersService.findOne(payload.name);
 
     if (user) {

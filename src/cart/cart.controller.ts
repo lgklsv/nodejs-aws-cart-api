@@ -13,9 +13,8 @@ import {
 import { BasicAuthGuard } from '../auth';
 import { OrderService } from '../order';
 import { AppRequest, getUserIdFromRequest } from '../shared';
-import { calculateCartTotal } from './models-rules';
 import { CartService } from './services';
-import { CreateOrderDto, PutCartPayload } from 'src/order/type';
+import { CreateOrderDto, OrderStatus, PutCartPayload } from 'src/order/type';
 import { DataSource, EntityManager } from 'typeorm';
 import { InjectDataSource } from '@nestjs/typeorm';
 
@@ -73,7 +72,6 @@ export class CartController {
       }
 
       const { id: cartId, items } = cart;
-      const total = calculateCartTotal(items);
       const order = this.orderService.create(
         {
           userId,
@@ -82,14 +80,11 @@ export class CartController {
             product_id: product_id,
             count,
           })),
-          comments: '',
-          payment: {
-            type: 'test',
-            amount: 0,
-            currency: 'USD',
-          },
+          status: OrderStatus.Open,
+          comments: body.comments,
+          payment: body.payment,
           address: body.address,
-          total,
+          total: body.total,
         },
         manager,
       );

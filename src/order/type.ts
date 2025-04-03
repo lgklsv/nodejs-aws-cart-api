@@ -28,12 +28,11 @@ export type Address = {
 };
 export type CreateOrderDto = {
   items: Array<{ productId: string; count: 1 }>;
-  address: {
-    comment: string;
-    address: string;
-    lastName: string;
-    firstName: string;
-  };
+  address: Address;
+  payment: Payment;
+  comments: string | null;
+  status: string;
+  total: number;
 };
 
 export type PutCartPayload = {
@@ -45,6 +44,7 @@ export type CreateOrderPayload = {
   cartId: string;
   items: Array<{ product_id: string; count: number }>;
   address: Address;
+  status: OrderStatus;
   payment: Payment;
   comments: string;
   total: number;
