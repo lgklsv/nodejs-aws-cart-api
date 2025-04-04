@@ -21,17 +21,16 @@ export class CartService {
       ? manager.getRepository(Cart)
       : this.cartRepository;
 
-    return await repository.findOne({ where: { user_id: userId } });
+    return await repository.findOne({
+      where: { user_id: userId, status: CartStatuses.OPEN },
+      relations: ['items'],
+    });
   }
 
   createByUserId(user_id: string) {
-    const timestamp = Date.now();
-
     const userCart = this.cartRepository.create({
       id: randomUUID(),
       user_id,
-      created_at: timestamp,
-      updated_at: timestamp,
       status: CartStatuses.OPEN,
       items: [],
     });
@@ -79,6 +78,14 @@ export class CartService {
     }
 
     return await this.cartRepository.save(userCart);
+  }
+
+  async closeCart(cartId: string, manager?: EntityManager) {
+    const repository = manager
+      ? manager.getRepository(Cart)
+      : this.cartRepository;
+
+    await repository.update({ id: cartId }, { status: CartStatuses.ORDERED });
   }
 
   async removeByUserId(userId: string, manager?: EntityManager) {

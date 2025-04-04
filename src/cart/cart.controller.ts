@@ -67,12 +67,13 @@ export class CartController {
       const userId = getUserIdFromRequest(req);
       const cart = await this.cartService.findByUserId(userId, manager);
 
-      if (!(cart && cart.items.length)) {
+      if (!cart || !cart.items?.length) {
         throw new BadRequestException('Cart is empty');
       }
 
       const { id: cartId, items } = cart;
-      const order = this.orderService.create(
+
+      const order = await this.orderService.create(
         {
           userId,
           cartId,
@@ -84,11 +85,13 @@ export class CartController {
           comments: body.comments,
           payment: body.payment,
           address: body.address,
-          total: body.total,
+          total: items.reduce((acc, item) => acc + item.count, 0),
         },
         manager,
       );
-      this.cartService.removeByUserId(userId, manager);
+
+      // Set ORDERED status
+      await this.cartService.closeCart(cartId, manager);
 
       return {
         order,

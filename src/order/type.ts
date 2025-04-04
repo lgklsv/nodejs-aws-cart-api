@@ -27,12 +27,9 @@ export type Address = {
   comment: string;
 };
 export type CreateOrderDto = {
-  items: Array<{ productId: string; count: 1 }>;
   address: Address;
   payment: Payment;
   comments: string | null;
-  status: string;
-  total: number;
 };
 
 export type PutCartPayload = {
