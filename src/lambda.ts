@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import serverlessExpress from '@codegenie/serverless-express';
 import helmet from 'helmet';
+import cors from 'cors';
 
 import { AppModule } from './app.module';
 import { Callback, Context, Handler } from 'aws-lambda';
@@ -10,9 +11,7 @@ let server: Handler;
 async function bootstrap(): Promise<Handler> {
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors({
-    origin: (req, callback) => callback(null, true),
-  });
+  app.use(cors());
   app.use(helmet());
 
   await app.init();

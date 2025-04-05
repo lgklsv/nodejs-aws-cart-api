@@ -36,6 +36,7 @@ export class NestLambdaStack extends cdk.Stack {
             'passport-local',
             'reflect-metadata',
             'rxjs',
+            'cors',
           ],
         },
         environment: {
@@ -52,11 +53,6 @@ export class NestLambdaStack extends cdk.Stack {
 
     const nestLambdaFunctionUrl = nestLambdaFunction.addFunctionUrl({
       authType: lambda.FunctionUrlAuthType.NONE,
-      cors: {
-        allowedOrigins: ['*'],
-        allowedHeaders: ['*'],
-        allowedMethods: [lambda.HttpMethod.ALL],
-      },
     });
 
     new cdk.CfnOutput(this, 'NestLambdaFunctionUrl', {
