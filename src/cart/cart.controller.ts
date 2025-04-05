@@ -88,7 +88,7 @@ export class CartController {
           comments: body.comments,
           payment: body.payment,
           address: body.address,
-          total: items.reduce((acc, item) => acc + item.count, 0),
+          total: body.total,
         },
         manager,
       );

@@ -30,6 +30,7 @@ export type CreateOrderDto = {
   address: Address;
   payment: Payment;
   comments: string | null;
+  total: number;
 };
 
 export type PutCartPayload = {

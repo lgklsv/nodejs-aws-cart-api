@@ -8,10 +8,10 @@ export class Order {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'uuid', unique: true })
+  @Column({ type: 'uuid' })
   user_id: string;
 
-  @Column({ type: 'uuid', unique: true })
+  @Column({ type: 'uuid' })
   cart_id: string;
 
   @Column('jsonb')
