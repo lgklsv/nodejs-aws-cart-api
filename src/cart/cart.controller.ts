@@ -9,6 +9,7 @@ import {
   HttpStatus,
   HttpCode,
   BadRequestException,
+  Inject,
 } from '@nestjs/common';
 import { BasicAuthGuard } from '../auth';
 import { OrderService } from '../order';
@@ -21,7 +22,9 @@ import { InjectDataSource } from '@nestjs/typeorm';
 @Controller('api/profile/cart')
 export class CartController {
   constructor(
+    @Inject(CartService)
     private cartService: CartService,
+    @Inject(OrderService)
     private orderService: OrderService,
     @InjectDataSource()
     private readonly dataSource: DataSource,

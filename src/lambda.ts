@@ -28,20 +28,9 @@ export const handler: Handler = async (
 ) => {
   try {
     server = server ?? (await bootstrap());
-    return server(event, context, callback);
+    return await server(event, context, callback);
   } catch (err) {
     console.error(err);
-
-    return {
-      statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message: 'Internal Server Error',
-        error: err.message,
-      }),
-    };
+    throw err;
   }
 };

@@ -1,4 +1,5 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import 'reflect-metadata';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/services/users.service';
 import { User } from 'src/users';
@@ -11,6 +12,7 @@ type TokenResponse = {
 @Injectable()
 export class AuthService {
   constructor(
+    @Inject(UsersService)
     private usersService: UsersService,
     private jwtService: JwtService,
   ) {}
