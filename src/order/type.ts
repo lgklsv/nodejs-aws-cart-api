@@ -13,6 +13,13 @@ type StatusHistory = Array<{
   comment: string;
 }>;
 
+export type Payment = {
+  type: string;
+  amount: number;
+  currency: string;
+  details?: Record<string, any>;
+};
+
 export type Address = {
   address: string;
   firstName: string;
@@ -20,13 +27,10 @@ export type Address = {
   comment: string;
 };
 export type CreateOrderDto = {
-  items: Array<{ productId: string; count: 1 }>;
-  address: {
-    comment: string;
-    address: string;
-    lastName: string;
-    firstName: string;
-  };
+  address: Address;
+  payment: Payment;
+  comments: string | null;
+  total: number;
 };
 
 export type PutCartPayload = {
@@ -36,7 +40,10 @@ export type PutCartPayload = {
 export type CreateOrderPayload = {
   userId: string;
   cartId: string;
-  items: Array<{ productId: string; count: number }>;
+  items: Array<{ product_id: string; count: number }>;
   address: Address;
+  status: OrderStatus;
+  payment: Payment;
+  comments: string;
   total: number;
 };
